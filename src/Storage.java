@@ -29,7 +29,7 @@ public class Storage {
         if(itemNum >= 0)
             this.itemNum = itemNum;
         else {
-            System.out.println("invalid number");
+            System.out.println("Invalid number");
         }
     }
 
@@ -41,7 +41,14 @@ public class Storage {
         if(itemPrice >= 0.0)
             this.itemPrice = itemPrice;
         else {
-            System.out.println("invalid price");
+            System.out.println("Invalid price");
         }
+    }
+
+    public String toString() {
+        return
+                "Name: " + itemName + ";" + "\n" +
+                "Stock: " + itemNum + ";" + "\n" +
+                "Price: " + itemPrice + ";" + "\n";
     }
 }
