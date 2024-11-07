@@ -3,7 +3,7 @@
 public class Storage {
 
     private String itemName;
-//    private int itemCode;
+    private String itemCode;
     private int itemNum;
     private double itemPrice;
 
@@ -44,6 +44,14 @@ public class Storage {
             System.out.println("Invalid price");
         }
     }
+    public String getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
+    }
+
 
     public String toString() {
         return

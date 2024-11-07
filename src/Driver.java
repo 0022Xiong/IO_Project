@@ -35,22 +35,22 @@ public class Driver {
 //                }
                 else{
                     System.out.println("Invalid word");
-                }//input end
+                }
 
-            }
+            }//input end
             else if(mainMode == 's' || mainMode == 'S'){
                 System.out.println("Now in the SEARCH mode");
 //                System.out.println("Enter the key word: ");
 
-            }
+            }//search end
             else if(mainMode == 'd' || mainMode == 'D'){
                 System.out.println("Now in the DELETE mode");
                 ioModule.itemDelete();
 
-            }
+            }//delete end
 //            if(mode == 'o' || mode == 'O'){
 //                System.out.println("Now in the OUTPUT mode");
-//            }
+//            }//output end
             else{
                 System.out.println("Invalid word. Please enter \"input\", \"search\", \"delete\" or \"i\", \"s\", \"d\". ");
                 setup();
