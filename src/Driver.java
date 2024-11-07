@@ -17,9 +17,9 @@ public class Driver {
     }
 
     public void setup(){
-        System.out.println("Please set the maximum space: ");
-        int maxItem = input.nextInt();
-        ioModule = new IOModule(maxItem);
+//        System.out.println("Please set the maximum space: ");
+//        int maxItem = input.nextInt();
+//        ioModule = new IOModule(maxItem);
         System.out.println("Please select the mode:(input(i),search(s),delete(d),output(o)[WIP]");
         char mainMode = input.next().charAt(0);
             if(mainMode == 'i' || mainMode == 'I'){

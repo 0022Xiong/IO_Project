@@ -7,16 +7,16 @@ public class Storage {
     private int itemNum;
     private double itemPrice;
 
-    public Storage(String itemName, int itemNum, double itemPrice){
+    public Storage(String itemName, String itemCode, int itemNum, double itemPrice){
         setItemName(itemName);
         setItemNum(itemNum);
         setItemPrice(itemPrice);
+        setItemCode(itemCode);
     }
 
     public String getItemName() {
         return itemName;
     }
-
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
@@ -24,7 +24,6 @@ public class Storage {
     public int getItemNum() {
         return itemNum;
     }
-
     public void setItemNum(int itemNum) {
         if(itemNum >= 0)
             this.itemNum = itemNum;
@@ -36,7 +35,6 @@ public class Storage {
     public double getItemPrice() {
         return itemPrice;
     }
-
     public void setItemPrice(double itemPrice) {
         if(itemPrice >= 0.0)
             this.itemPrice = itemPrice;
@@ -44,19 +42,20 @@ public class Storage {
             System.out.println("Invalid price");
         }
     }
+
     public String getItemCode() {
         return itemCode;
     }
-
     public void setItemCode(String itemCode) {
         this.itemCode = itemCode;
     }
 
-
     public String toString() {
         return
                 "Name: " + itemName + ";" + "\n" +
+                "Code: " + itemCode + ";" + "\n" +
                 "Stock: " + itemNum + ";" + "\n" +
                 "Price: " + itemPrice + ";" + "\n";
+
     }
 }
