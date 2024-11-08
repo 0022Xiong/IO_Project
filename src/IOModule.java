@@ -4,21 +4,15 @@ import java.util.ArrayList;
 public class IOModule {
     Scanner input = new Scanner(System.in);
 
-//    private Storage storage[];
     public ArrayList<Storage> storage = new ArrayList<Storage>();
-//    private int maxItem;
-//
-//    public IOModule(int capability){
-//        this.maxItem = capability;
-//        storage = new Storage[capability];
-//    }
+
     public boolean add(Storage item){
         return storage.add(item);
     }
 
     int currentItem = 0;
 
-    public void itemTypeIn () {
+    public void itemAddTypeIn () {
         input.nextLine();//fix the bug
         System.out.println("Please enter the name of the item: ");
         String itemName = input.nextLine();
@@ -28,7 +22,6 @@ public class IOModule {
         int itemNum = input.nextInt();
         System.out.println("Please enter the price of the item: ");
         double itemPrice = input.nextDouble();
-   //     storage[currentItem] = new Storage(itemName, itemNum, itemPrice);
         boolean isAdded = storage.add(new Storage(
                 itemName,
                 itemCode,
@@ -36,7 +29,7 @@ public class IOModule {
                 itemPrice
                 )
         );
-        if (isAdded == true) {
+        if (isAdded) {
             System.out.println("Finish!");
             currentItem++;
         }
@@ -45,18 +38,31 @@ public class IOModule {
 
         System.out.println("Preview: ");
         System.out.print(getItemList());
-//        System.out.println(maxItem - currentItem + " line(s) remain");
         System.out.println("Add more?(Y/n)");
         char sub2Mode = input.next().charAt(0);
         if (sub2Mode == 'y' || sub2Mode == 'Y'){
             clearScreen();
-            itemTypeIn();
+            itemAddTypeIn();
         }
 
     }//input type-in end
-//        public void itemImport(){
+//        public void itemAddImport(){
 //
 //        }//input import end
+
+    public Storage itemSearch (String codeSearch){
+        Storage searchItem = null;
+
+        if(!storage.isEmpty()){
+            for(Storage s : storage)
+                if(s.getItemCode().equals(codeSearch))
+                    searchItem = s;
+                else
+                    System.out.println("Sorry, no result. ");
+        }
+        return searchItem;
+
+    }
 
     public void itemDelete () {
         System.out.println("Please enter the number you want to delete: ");
@@ -77,7 +83,7 @@ public class IOModule {
     public String getItemList () {
         String listOfItem = "";
         for (int i = 1; i < currentItem + 1; i++) {
-            listOfItem += i + ": " + storage.get(i - 1) + "\n";
+            listOfItem += "No." + i + ": "  + "\n" + storage.get(i - 1) + "\n";
         }
         return listOfItem;
     }
