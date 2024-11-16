@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.*;
+
 
 public class IOModule {
     Scanner input = new Scanner(System.in);
@@ -92,6 +94,26 @@ public class IOModule {
     public void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    public String setDestination() throws IOException{
+            System.out.println("Please enter the location: ");
+            String destinationFile = input.nextLine();
+            File list = new File(destinationFile);
+            if (list.createNewFile()){
+                System.out.println("List file " + destinationFile + " is created! ");
+            }
+            return destinationFile;
+    }
+
+    public void autoOutputList(String destinationFile) throws IOException{
+        try (BufferedWriter output = new BufferedWriter(new FileWriter(destinationFile))){
+            output.write(getItemList());
+        System.out.println("List has been output. ");
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

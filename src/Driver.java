@@ -1,4 +1,4 @@
-
+import java.io.*;
 import java.util.Scanner;
 
 public class Driver {
@@ -18,7 +18,7 @@ public class Driver {
 
     public void setup(){
         ioModule = new IOModule();
-        System.out.println("Please select the mode:(add(a),search(s),delete(d),output(o)[WIP]");
+        System.out.println("Please select the mode:(add(a),search(s),delete(d),edit(e)[WIP]");
         char mainMode = input.next().charAt(0);
             if(mainMode == 'a' || mainMode == 'A'){
                 System.out.println("Now in the ADD mode");
@@ -26,7 +26,19 @@ public class Driver {
                 char subMode = input.next().charAt(0);
                 if(subMode == 't' || subMode == 'T'){
                     ioModule.itemAddTypeIn();
+                    System.out.println("Do you want to output the list you are creating? (Y/n)");
+                    char decisionOutput = input.next().charAt(0);
+                    if (decisionOutput == 'Y' || decisionOutput == 'y') {
+                        try {
+                            ioModule.setDestination();
+                            String destinationFile = ioModule.setDestination();
+                            ioModule.autoOutputList(destinationFile);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
+
+                }
 
 //                if(subMode == 'i' || subMode == 'I'){
 //
@@ -48,9 +60,9 @@ public class Driver {
                 ioModule.itemDelete();
 
             }//delete end
-//            if(mode == 'o' || mode == 'O'){
-//                System.out.println("Now in the OUTPUT mode");
-//            }//output end
+//            if(mode == 'e' || mode == 'E'){
+//                System.out.println("Now in the EDIT mode");
+//            }//edit end
             else{
                 System.out.println("Invalid word. Please enter \"input\", \"search\", \"delete\" or \"i\", \"s\", \"d\". ");
                 setup();
