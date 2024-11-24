@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Driver {
 
     public IOModule ioModule;
+    public ListFile listFile;
     private Scanner input = new Scanner(System.in);
 
     public static void main(String[] args){
@@ -22,7 +23,7 @@ public class Driver {
         char mainMode = input.next().charAt(0);
             if(mainMode == 'a' || mainMode == 'A'){
                 System.out.println("Now in the ADD mode");
-                System.out.println("Please choose way to add: type-in(t) or import from .txt(i)[WIP]");
+                System.out.println("Please choose way to add: type-in(t) or import from .txt(i)");
                 char subMode = input.next().charAt(0);
                 if(subMode == 't' || subMode == 'T'){
                     ioModule.itemAddTypeIn();
@@ -30,9 +31,9 @@ public class Driver {
                     char decisionOutput = input.next().charAt(0);
                     if (decisionOutput == 'Y' || decisionOutput == 'y') {
                         try {
-                            ioModule.setDestination();
-                            String destinationFile = ioModule.setDestination();
-                            ioModule.autoOutputList(destinationFile);
+                            listFile.setOutputDestination();
+                            String destinationFile = listFile.setOutputDestination();
+                            listFile.autoOutputList(destinationFile);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -40,8 +41,15 @@ public class Driver {
 
                 }
 
-//                if(subMode == 'i' || subMode == 'I'){
+//                else if(subMode == 'i' || subMode == 'I'){
+//                    try {
+//                        listFile.setImportDestination();
+//                        String destinationFile = listFile.setImportDestination();
+//                        listFile.readTxtList(destinationFile);
 //
+//                    }catch (IOException e){
+//                        throw new RuntimeException();
+//                    }
 //                }
                 else{
                     System.out.println("Invalid word");
@@ -60,9 +68,11 @@ public class Driver {
                 ioModule.itemDelete();
 
             }//delete end
+
 //            if(mode == 'e' || mode == 'E'){
 //                System.out.println("Now in the EDIT mode");
 //            }//edit end
+
             else{
                 System.out.println("Invalid word. Please enter \"input\", \"search\", \"delete\" or \"i\", \"s\", \"d\". ");
                 setup();

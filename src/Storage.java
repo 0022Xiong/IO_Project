@@ -54,7 +54,7 @@ public class Storage {
         return
                 "Name: " + itemName + ";" + "\n" +
                 "Code: " + itemCode + ";" + "\n" +
-                "Stock: " + itemNum + ";" + "\n" +
+                "Quantity: " + itemNum + ";" + "\n" +
                 "Price: " + itemPrice + ";" + "\n";
 
     }

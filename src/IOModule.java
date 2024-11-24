@@ -20,7 +20,7 @@ public class IOModule {
         String itemName = input.nextLine();
         System.out.println("Please enter the code of the item: ");
         String itemCode = input.nextLine();
-        System.out.println("Please enter the stock of the item: ");
+        System.out.println("Please enter the quantity of the item: ");
         int itemNum = input.nextInt();
         System.out.println("Please enter the price of the item: ");
         double itemPrice = input.nextDouble();
@@ -48,6 +48,7 @@ public class IOModule {
         }
 
     }//input type-in end
+
 //        public void itemAddImport(){
 //
 //        }//input import end
@@ -96,24 +97,5 @@ public class IOModule {
         System.out.flush();
     }
 
-    public String setDestination() throws IOException{
-            System.out.println("Please enter the location: ");
-            String destinationFile = input.nextLine();
-            File list = new File(destinationFile);
-            if (list.createNewFile()){
-                System.out.println("List file " + destinationFile + " is created! ");
-            }
-            return destinationFile;
-    }
-
-    public void autoOutputList(String destinationFile) throws IOException{
-        try (BufferedWriter output = new BufferedWriter(new FileWriter(destinationFile))){
-            output.write(getItemList());
-        System.out.println("List has been output. ");
-        } catch (IOException e){
-            throw new RuntimeException(e);
-        }
-
-    }
 
 }
