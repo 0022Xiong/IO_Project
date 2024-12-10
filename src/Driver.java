@@ -19,11 +19,13 @@ public class Driver {
 
     public void setup(){
         ioModule = new IOModule();
-        System.out.println("Please select the mode:(add(a),search(s),delete(d),edit(e)[WIP]");
+        System.out.println("Please select the mode:(add(a),search(s),delete(d)");
+//      edit(e)
         char mainMode = input.next().charAt(0);
             if(mainMode == 'a' || mainMode == 'A'){
                 System.out.println("Now in the ADD mode");
-                System.out.println("Please choose way to add: type-in(t) or import from .txt(i)");
+                System.out.println("Please choose way to add: type-in(t)");
+//                 or import from .txt(i)"
                 char subMode = input.next().charAt(0);
                 if(subMode == 't' || subMode == 'T'){
                     ioModule.itemAddTypeIn();
@@ -31,9 +33,11 @@ public class Driver {
                     char decisionOutput = input.next().charAt(0);
                     if (decisionOutput == 'Y' || decisionOutput == 'y') {
                         try {
-                            listFile.setOutputDestination();
-                            String destinationFile = listFile.setOutputDestination();
-                            listFile.autoOutputList(destinationFile);
+                            ioModule.listRecord = ioModule.getItemList();
+                            this.listFile = new ListFile();
+                            listFile.output(ioModule.listRecord);
+//                            String destinationFile = listFile.setOutputDestination();
+//                            listFile.autoOutputList(destinationFile);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -58,9 +62,9 @@ public class Driver {
             }//input end
             else if(mainMode == 's' || mainMode == 'S'){
                 System.out.println("Now in the SEARCH mode");
-                System.out.println("Please enter the code: ");
+                System.out.println("Please enter the code of the item: ");
                 String codeSearch = input.nextLine();
-                ioModule.itemSearch(codeSearch);
+                ioModule.itemCodeSearch(codeSearch);
 
             }//search end
             else if(mainMode == 'd' || mainMode == 'D'){

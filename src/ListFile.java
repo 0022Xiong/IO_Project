@@ -6,34 +6,58 @@ public class ListFile {
     public IOModule ioModule;
 
     Scanner input = new Scanner(System.in);
+
     //Auto output
-    public String setOutputDestination() throws IOException {
-        System.out.println("Tips: Don't forget to type in the name of the file. \n Please enter the output location: ");
+    public void output(String listRecord) throws IOException {
+        System.out.println("Tips: Don't forget to type in the name of the file. \n  Also don't forget the .txt!");
+        System.out.println("If the file is not exist, then create one. ");
+        System.out.println("Please enter the output location: ");
         String destinationFileOutput = input.nextLine();
-        try {
-            File output = new File(destinationFileOutput);
-            if (output.createNewFile()){
-                System.out.println("List file " + destinationFileOutput + " is created! ");
-            }
-            else {
-                System.out.println("Invalid location. Please try again");
-                setOutputDestination();
-            }
-        } catch (IOException e){
+        try (FileOutputStream output = new FileOutputStream(destinationFileOutput, true)) {
+            this.ioModule = new IOModule();
+            byte[] itemListBytes = listRecord.getBytes();
+            output.write(itemListBytes);
+            System.out.println("List has been output. ");
+            output.close();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return destinationFileOutput;
+//        try {
+//
+////            File output = new File(destinationFileOutput);
+////            if (output.exists()){
+////                outputList(destinationFileOutput);
+////            }
+////            else{
+////                if (output.createNewFile()){
+////                    System.out.println("List file " + destinationFileOutput + " is created! ");
+////                    outputList(destinationFileOutput);
+////                }
+////                else {
+////                    System.out.println("Invalid location. Please try again");
+////                    output();
+////                }
+////            }
+//            outputList(destinationFileOutput);
+//        } catch (IOException e){
+//            throw new RuntimeException(e);
+//        }
+
     }
 
-    public void autoOutputList(String destinationFile) throws IOException{
-        try (BufferedWriter output = new BufferedWriter(new FileWriter(destinationFile))){
-            output.write(ioModule.getItemList());
-            System.out.println("List has been output. ");
-        } catch (IOException e){
-            throw new RuntimeException(e);
-        }
-
-    }//Auto output end
+//    public void outputList(String destinationFile) throws IOException{
+//        try (FileOutputStream output = new FileOutputStream(destinationFile,true)){
+//            this.ioModule = new IOModule();
+//            String getItemList = ioModule.getItemList();
+//            byte[] itemListBytes = getItemList.getBytes();
+//            output.write(itemListBytes);
+//            System.out.println("List has been output. ");
+//            output.close();
+//        } catch (IOException e){
+//            throw new RuntimeException(e);
+//        }
+//
+//  }//Auto output end
 
     //Import
     public String setImportDestination() throws IOException{
@@ -54,6 +78,7 @@ public class ListFile {
 
     }
 
+
     public void readTxtList(String destinationFile) throws IOException{
         try(BufferedReader read = new BufferedReader(new FileReader(destinationFile))){
             String line;
@@ -61,6 +86,7 @@ public class ListFile {
                 System.out.println(line);
             }
         }catch (IOException e){
+//            readTxtList(null);
             throw new RuntimeException(e);
         }
     }

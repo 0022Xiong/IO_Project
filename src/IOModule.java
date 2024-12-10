@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.io.*;
-
+//import java.io.*;
 
 public class IOModule {
     Scanner input = new Scanner(System.in);
@@ -12,10 +11,10 @@ public class IOModule {
         return storage.add(item);
     }
 
-    int currentItem = 0;
+    public String listRecord = "0.0.0.0";
+    private int currentItem = 0;
 
     public void itemAddTypeIn () {
-        input.nextLine();//fix the bug
         System.out.println("Please enter the name of the item: ");
         String itemName = input.nextLine();
         System.out.println("Please enter the code of the item: ");
@@ -44,8 +43,12 @@ public class IOModule {
         char sub2Mode = input.next().charAt(0);
         if (sub2Mode == 'y' || sub2Mode == 'Y'){
             clearScreen();
+            input.nextLine();//fix the bug
             itemAddTypeIn();
         }
+//        else {
+//            listRecord = getItemList();
+//        }
 
     }//input type-in end
 
@@ -53,7 +56,7 @@ public class IOModule {
 //
 //        }//input import end
 
-    public Storage itemSearch (String codeSearch){
+    public Storage itemCodeSearch (String codeSearch){
         Storage searchItem = null;
 
         if(!storage.isEmpty()){
@@ -68,7 +71,7 @@ public class IOModule {
     }
 
     public void itemDelete () {
-        System.out.println("Please enter the number you want to delete: ");
+        System.out.println("Please enter the number of the data you want to delete: ");
         int num = input.nextInt();
         storage.set(num - 1, null);
         System.out.println("Finish!");
