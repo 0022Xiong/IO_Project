@@ -22,42 +22,9 @@ public class ListFile {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        try {
-//
-////            File output = new File(destinationFileOutput);
-////            if (output.exists()){
-////                outputList(destinationFileOutput);
-////            }
-////            else{
-////                if (output.createNewFile()){
-////                    System.out.println("List file " + destinationFileOutput + " is created! ");
-////                    outputList(destinationFileOutput);
-////                }
-////                else {
-////                    System.out.println("Invalid location. Please try again");
-////                    output();
-////                }
-////            }
-//            outputList(destinationFileOutput);
-//        } catch (IOException e){
-//            throw new RuntimeException(e);
-//        }
 
-    }
+    }//Auto output end
 
-//    public void outputList(String destinationFile) throws IOException{
-//        try (FileOutputStream output = new FileOutputStream(destinationFile,true)){
-//            this.ioModule = new IOModule();
-//            String getItemList = ioModule.getItemList();
-//            byte[] itemListBytes = getItemList.getBytes();
-//            output.write(itemListBytes);
-//            System.out.println("List has been output. ");
-//            output.close();
-//        } catch (IOException e){
-//            throw new RuntimeException(e);
-//        }
-//
-//  }//Auto output end
 
     //Import
     public String setImportDestination() throws IOException{

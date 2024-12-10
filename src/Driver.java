@@ -36,8 +36,6 @@ public class Driver {
                             ioModule.listRecord = ioModule.getItemList();
                             this.listFile = new ListFile();
                             listFile.output(ioModule.listRecord);
-//                            String destinationFile = listFile.setOutputDestination();
-//                            listFile.autoOutputList(destinationFile);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

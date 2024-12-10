@@ -46,9 +46,6 @@ public class IOModule {
             input.nextLine();//fix the bug
             itemAddTypeIn();
         }
-//        else {
-//            listRecord = getItemList();
-//        }
 
     }//input type-in end
 
