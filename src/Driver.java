@@ -7,7 +7,7 @@ public class Driver {
     public ListFile listFile;
     private Scanner input = new Scanner(System.in);
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         System.out.println("////////////////////////////////////////");
         System.out.println("IO SYSTEM FOR SHOPS");
         System.out.println("////////////////////////////////////////");
@@ -17,31 +17,31 @@ public class Driver {
         driver.setup();
     }
 
-    public void setup(){
+    public void setup() {
         ioModule = new IOModule();
         System.out.println("Please select the mode:(add(a),search(s),delete(d)");
 //      edit(e)
         char mainMode = input.next().charAt(0);
-            if(mainMode == 'a' || mainMode == 'A'){
-                System.out.println("Now in the ADD mode");
-                System.out.println("Please choose way to add: type-in(t)");
-//                 or import from .txt(i)"
-                char subMode = input.next().charAt(0);
-                if(subMode == 't' || subMode == 'T'){
-                    ioModule.itemAddTypeIn();
-                    System.out.println("Do you want to output the list you are creating? (Y/n)");
-                    char decisionOutput = input.next().charAt(0);
-                    if (decisionOutput == 'Y' || decisionOutput == 'y') {
-                        try {
-                            ioModule.listRecord = ioModule.getItemList();
-                            this.listFile = new ListFile();
-                            listFile.output(ioModule.listRecord);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-
+        if (mainMode == 'a' || mainMode == 'A') {
+            ioModule.clearScreen();
+            System.out.println("Now in the ADD mode");
+//            System.out.println("Please choose way to add: type-in(t) or import from .txt(i)");
+//            char subMode = input.next().charAt(0);
+//            if (subMode == 't' || subMode == 'T') {
+            ioModule.itemAddTypeIn();
+            System.out.println("Do you want to output the list you are creating? (Y/n)");
+            char decisionOutput = input.next().charAt(0);
+            if (decisionOutput == 'Y' || decisionOutput == 'y') {
+                try {
+                    ioModule.listRecord = ioModule.getItemList();
+                    this.listFile = new ListFile();
+                    listFile.output(ioModule.listRecord);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
+                //               }
+
+            }
 
 //                else if(subMode == 'i' || subMode == 'I'){
 //                    try {
@@ -53,33 +53,50 @@ public class Driver {
 //                        throw new RuntimeException();
 //                    }
 //                }
-                else{
-                    System.out.println("Invalid word");
-                }
+            else {
+                System.out.println("Invalid word");
+            }
 
-            }//input end
-            else if(mainMode == 's' || mainMode == 'S'){
-                System.out.println("Now in the SEARCH mode");
-                System.out.println("Please enter the code of the item: ");
-                String codeSearch = input.nextLine();
-                ioModule.itemCodeSearch(codeSearch);
+        }//input end
+        else if (mainMode == 's' || mainMode == 'S') {
+            ioModule.clearScreen();
+            System.out.println("Now in the SEARCH mode");
+            System.out.println("Please enter the code of the item: ");
+            String codeSearch = input.nextLine();
+            ioModule.itemCodeSearch(codeSearch);
 
-            }//search end
-            else if(mainMode == 'd' || mainMode == 'D'){
-                System.out.println("Now in the DELETE mode");
-                ioModule.itemDelete();
+        }//search end
+        else if (mainMode == 'd' || mainMode == 'D') {
+            ioModule.clearScreen();
+            System.out.println("Now in the DELETE mode");
+            ioModule.itemDelete();
 
-            }//delete end
+        }//delete end
 
 //            if(mode == 'e' || mode == 'E'){
 //                System.out.println("Now in the EDIT mode");
 //            }//edit end
 
-            else{
-                System.out.println("Invalid word. Please enter \"input\", \"search\", \"delete\" or \"i\", \"s\", \"d\". ");
-                setup();
-            }
+        else {
+            ioModule.clearScreen();
+            System.out.println("Invalid word. Please enter \"input\", \"search\", \"delete\" or \"i\", \"s\", \"d\". ");
+            setup();
+        }
 
     }
+//    private int displayMenu() {
+//        ioModule.clearScreen();
+//        System.out.println("////////////////////////////////////////");
+//        System.out.print("""
+//                MENU
+//                1) Add new item(s)
+//                2) Edit the current list
+//                """);
+//        System.out.println("////////////////////////////////////////");
+//        return input.nextInt();
+//    }
+//    private void actionMenu() {
+//
+//    }
 
 }

@@ -52,10 +52,10 @@ public class Storage {
 
     public String toString() {
         return
-                "Name: " + itemName + ";" + "\n" +
-                "Code: " + itemCode + ";" + "\n" +
-                "Quantity: " + itemNum + ";" + "\n" +
-                "Price: " + itemPrice + ";" + "\n";
+                "Name: " + itemName + "\n" +
+                "Code: " + itemCode + "\n" +
+                "Quantity: " + itemNum + "\n" +
+                "Price(CHY): " + itemPrice + "\n";
 
     }
 
