@@ -91,7 +91,7 @@ public class IOModule {
     public String getItemList() {
         String listOfItem = "";
         for (int i = 1; i < currentItem + 1; i++) {
-            listOfItem += "No." + i + ": " + "\n" + storage.get(i - 1) + "\n";
+            listOfItem += "No." + i + "\n" + storage.get(i - 1) + "\n";
         }
         return listOfItem;
     }

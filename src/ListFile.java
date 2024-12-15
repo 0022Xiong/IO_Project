@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ListFile {
 
     public IOModule ioModule;
+    public Storage storage;
 
     Scanner input = new Scanner(System.in);
 
@@ -51,33 +52,119 @@ public class ListFile {
 
     public void readTxtList(String destinationFileImport) throws IOException{
 
+        String importItemName = "";
+        String importItemCode = "";
+        int importItemNum = 0;
+        double importItemPrice = 0;
 
-        String importItemName;
-        String importItemCode;
-        int importItemNum;
-        int importItemPrice;
-//        System.out.println("Preview");
-        try(FileInputStream readFile = new FileInputStream(destinationFileImport)){
-            int importItemBytes;
-            int[] importBytes;
-            int count = 1;
-            int subCount = 0;
-            int lineCharDetect = 0;
-            int lineCharRecord = 0;
-            int i = 0;
-            int j = 0;
-            while ((importItemBytes = readFile.read()) != -1) {
-                lineCharDetect++;
-                lineCharRecord++;
-                if ((importItemBytes = readFile.read()) == 10) {
-                    count++;
+        int importItemBytes;
+
+        int[] importBytes;
+        int colonNumber = 0;
+
+        int[] line;
+        try(FileInputStream readFile1 = new FileInputStream(destinationFileImport)){
+            while((readFile1.read()) != -1){
+                if ((readFile1.read()) == 58){
+                    colonNumber++;
                 }
-                if (count % 6 == 2 && lineCharDetect == 6){
-                    importBytes = new int[setArrayVolume(destinationFileImport)];
-                    importItemName = String.valueOf((char) importItemBytes);
+            }
+            line = new int[colonNumber];
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
 
+        try (FileInputStream readFile2 = new FileInputStream(destinationFileImport)){
+            int k = -1;
+            int i = -1;
+            while(readFile2.read() != -1) {
+                if (readFile2.read() == 58) {
+                    k++;
                 }
+                if (readFile2.read() != 10) {
+                    if(readFile2.read() == 32) {
+                        i++;
+                    }//before space
+                    else if(readFile2.read() != 32 && i >= 0) {
+                        i++;
+                    }//after space
+                }//before enter
+                else {
+                    line[k] = i;
+                    i = 0;
+                }//enter
 
+            }
+
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
+
+        try (FileInputStream readFile3 = new FileInputStream(destinationFileImport)){
+            int k = -1;
+            while (((importItemBytes = readFile3.read()) != -1)){
+                if (readFile3.read() == 58) {
+                    k++;
+                }
+                if (k % 6 == 2) {
+                    importBytes = new int[line[k]];
+                    for (int i = 0; i <= line[k]; i++) {
+                        importBytes[i] = importItemBytes;
+                        importItemName = String.valueOf((char) importBytes[i]);
+                    }
+
+                }//name import
+
+                else if (k % 6 == 3) {
+                    importBytes = new int[line[k]];
+                    for (int i = 0; i <= line[k]; i++) {
+                        importBytes[i] = importItemBytes;
+                        importItemCode = String.valueOf((char) importBytes[i]);
+                    }
+
+                }//code import
+
+                else if (k % 6 == 4) {
+                    importBytes = new int[line[k]];
+                    for (int i = 0; i <= line[k]; i++) {
+                        importBytes[i] = importItemBytes;
+                        importItemNum = Integer.parseInt(String.valueOf((char) importBytes[i]));;
+                    }
+
+                }//quantity import
+
+                else if (k % 6 == 5) {
+                    importBytes = new int[line[k]];
+                    for (int i = 0; i <= line[k]; i++) {
+                        importBytes[i] = importItemBytes;
+                        importItemPrice = Double.parseDouble(String.valueOf((char) importBytes[i]));;
+                    }
+
+                }//Price import
+
+                ioModule = new IOModule();
+                ioModule.storage.add(new Storage(
+                        importItemName,
+                        importItemCode,
+                        importItemNum,
+                        importItemPrice));
+
+            }
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
+//            while ((importItemBytes = readFile.read()) != -1) {
+//                lineCharDetect++;
+//                lineCharRecord++;
+//
+//                if ((importItemBytes = readFile.read()) == 10) {
+//                    count++;
+//                }
+//                if (count % 6 == 2 && lineCharDetect == 6){
+//                    importBytes = new int[setArrayVolume(destinationFileImport)];
+//
+//
+//                }
 
 //                if ((importItemBytes = readFile.read()) != 32) {
 //                    j++;
@@ -118,30 +205,26 @@ public class ListFile {
 //                if (importItemBytes == 58){
 //
 //                }
-                subCount++;
 
+            System.out.println(colonNumber / 5 + "group(s) of data has been imported. ");
+            System.out.println("Preview: ");
+            System.out.println(ioModule.getItemList());
 
-                System.out.print((char) importItemBytes);
-
-            }
-            }catch (IOException e){
-            throw new RuntimeException(e);
-        }
     }
-    private int setArrayVolume(String destinationFileImport) throws IOException {
-        try (FileInputStream readFile = new FileInputStream(destinationFileImport)) {
-            int i = 0;
-            int j = 0;
-            while (readFile.read() != 10) {
-                if ((readFile.read()) != 32) {
-                    j++;
-                } else if (readFile.read() != 10) {
-                    i++;
-                }
-            }
-            return i - j;// ensure the volume of the array
-        }catch (IOException e){
-            throw new RuntimeException(e);
-        }
-    }
+//    private int setArrayVolume(String destinationFileImport) throws IOException {
+//        try (FileInputStream readFile = new FileInputStream(destinationFileImport)) {
+//            int i = 0;
+//            int j = 0;
+//            while (readFile.read() != 10) {
+//                if ((readFile.read()) != 32) {
+//                    j++;
+//                } else if (readFile.read() != 10) {
+//                    i++;
+//                }
+//            }
+//            return i - j;// ensure the volume of the array
+//        }catch (IOException e){
+//            throw new RuntimeException(e);
+//        }
+//    }
 }
