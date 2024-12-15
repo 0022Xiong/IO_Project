@@ -35,7 +35,7 @@ public class Driver {
                 try {
                     ioModule.listRecord = ioModule.getItemList();
                     this.listFile = new ListFile();
-                    listFile.output(ioModule.listRecord);
+                    listFile.itemOutput(ioModule.listRecord);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -61,9 +61,15 @@ public class Driver {
         else if (mainMode == 's' || mainMode == 'S') {
             ioModule.clearScreen();
             System.out.println("Now in the SEARCH mode");
-            System.out.println("Please enter the code of the item: ");
-            String codeSearch = input.nextLine();
-            ioModule.itemCodeSearch(codeSearch);
+            System.out.print("""
+                    Please select the mode:
+                    1) By name
+                    2) By code
+                    3) By quantity
+                    4) By price
+                    """);
+            int subMode = input.nextInt();
+            ioModule.itemSearch(subMode);
 
         }//search end
         else if (mainMode == 'd' || mainMode == 'D') {
@@ -84,6 +90,16 @@ public class Driver {
         }
 
     }
+
+    private void dummyData() {
+        Storage sample1 = new Storage(
+                "1",
+                "1",
+                1,
+                1.0
+        );
+    }
+
 //    private int displayMenu() {
 //        ioModule.clearScreen();
 //        System.out.println("////////////////////////////////////////");
@@ -91,6 +107,7 @@ public class Driver {
 //                MENU
 //                1) Add new item(s)
 //                2) Edit the current list
+//                3) Exit
 //                """);
 //        System.out.println("////////////////////////////////////////");
 //        return input.nextInt();
@@ -99,4 +116,8 @@ public class Driver {
 //
 //    }
 
+    private void exit() {
+        System.out.println("Exiting...");
+        System.exit(0);
+    }
 }

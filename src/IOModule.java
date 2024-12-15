@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-//import java.io.*;
 
 public class IOModule {
     Scanner input = new Scanner(System.in);
@@ -8,9 +7,10 @@ public class IOModule {
     public ArrayList<Storage> storage = new ArrayList<Storage>();
 
     public String listRecord = "Error";
-    private int currentItem = 0;
+    public int currentItem = 0;
 
     public void itemAddTypeIn() {
+        System.out.println("Warning: avoid colons(:) ");
         System.out.println("Please enter the name of the item: ");
         String itemName = input.nextLine();
         System.out.println("Please enter the code of the item: ");
@@ -44,25 +44,44 @@ public class IOModule {
 
     }//input type-in end
 
-//        public void itemAddImport(){
-//
-//        }//input import end
-
-    public Storage itemCodeSearch(String codeSearch) {
+    public Storage itemSearch(int subMode) {
+        String search = input.nextLine();
         Storage searchItem = null;
-
-        if (!storage.isEmpty()) {
-            for (Storage s : storage)
-                if (s.getItemCode().equals(codeSearch))
-                    searchItem = s;
-                else
-                    System.out.println("Sorry, no result. ");
+        if (storage.isEmpty()) {
+            return null;
+        }
+        else {
+            System.out.println("You probably want to find: ");
+            boolean result = false;
+            for (int i = 0; i < currentItem; i++){
+                switch (subMode){
+                    case 1 -> result = storage.get(i).getItemName().contains(search);
+                    case 2 -> result = storage.get(i).getItemCode().contains(search);
+                    case 3 -> result = String.valueOf(storage.get(i).getItemNum()).contains(search);
+                    case 4 -> result = String.valueOf(storage.get(i).getItemPrice()).contains(search);
+                }
+                if (result) {
+                    searchItem = storage.get(i);
+                    System.out.println(searchItem);
+                }
+            }
         }
         return searchItem;
-
     }
+//        if (!storage.isEmpty()) {
+//            for (Storage s : storage)
+//                if (s.getItemCode().equals(codeSearch))
+//                    searchItem = s;
+//                else
+//                    System.out.println("Sorry, no result. ");
+//        }
+//        else {
+//            System.out.println("There is nothing in the list. ");
+//            return null;
+//        }
 
     public void itemDelete() {
+        System.out.println("Tips: It is suggested that you should make a backup before you delete the data from the list. ");
         System.out.println("Please enter the number of the data you want to delete: ");
         int num = input.nextInt();
         storage.set(num - 1, null);

@@ -1,16 +1,14 @@
 import java.io.*;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class ListFile {
 
     public IOModule ioModule;
-    public Storage storage;
 
     Scanner input = new Scanner(System.in);
 
     //Auto output
-    public void output(String listRecord) throws IOException {
+    public void itemOutput(String listRecord) throws IOException {
         System.out.println("Preview: ");
         ioModule = new IOModule();
         System.out.print(ioModule.getItemList());
@@ -27,17 +25,17 @@ public class ListFile {
             throw new RuntimeException(e);
         }
 
-    }//Auto output end
+    }//Auto output module end
 
-
-    //Import wip
+    //Import needs test
     public String setImportDestination() throws IOException{
         System.out.println("Please enter the read location: ");
         String destinationFileImport = input.nextLine();
         try {
             File read = new File(destinationFileImport);
-            if (read.exists())
+            if (read.exists()){
                 System.out.println(destinationFileImport + " is exist. ");
+            }
             else {
                 System.out.println(destinationFileImport + " is not exist. Please enter a valid location. ");
                 setImportDestination();
@@ -48,7 +46,6 @@ public class ListFile {
         }
 
     }
-
 
     public void readTxtList(String destinationFileImport) throws IOException{
 
@@ -72,72 +69,72 @@ public class ListFile {
             line = new int[colonNumber];
         }catch (IOException e){
             throw new RuntimeException(e);
-        }
+        }//Phrase 1: read the valid line
 
         try (FileInputStream readFile2 = new FileInputStream(destinationFileImport)){
-            int k = -1;
-            int i = -1;
+            int lineNumber = -1;
+            int charDetect = -1;
             while(readFile2.read() != -1) {
                 if (readFile2.read() == 58) {
-                    k++;
+                    lineNumber++;
                 }
                 if (readFile2.read() != 10) {
                     if(readFile2.read() == 32) {
-                        i++;
+                        charDetect++;
                     }//before space
-                    else if(readFile2.read() != 32 && i >= 0) {
-                        i++;
+                    else if(readFile2.read() != 32 && charDetect >= 0) {
+                        charDetect++;
                     }//after space
                 }//before enter
                 else {
-                    line[k] = i;
-                    i = 0;
+                    line[lineNumber] = charDetect;
+                    charDetect = 0;
                 }//enter
 
             }
 
         }catch (IOException e){
             throw new RuntimeException(e);
-        }
+        }//Phrase 2: set the quantity of char
 
         try (FileInputStream readFile3 = new FileInputStream(destinationFileImport)){
-            int k = -1;
+            int lineNumber = -1;
             while (((importItemBytes = readFile3.read()) != -1)){
                 if (readFile3.read() == 58) {
-                    k++;
+                    lineNumber++;
                 }
-                if (k % 6 == 2) {
-                    importBytes = new int[line[k]];
-                    for (int i = 0; i <= line[k]; i++) {
+                if (lineNumber % 6 == 2) {
+                    importBytes = new int[line[lineNumber]];
+                    for (int i = 0; i <= line[lineNumber]; i++) {
                         importBytes[i] = importItemBytes;
                         importItemName = String.valueOf((char) importBytes[i]);
                     }
 
                 }//name import
 
-                else if (k % 6 == 3) {
-                    importBytes = new int[line[k]];
-                    for (int i = 0; i <= line[k]; i++) {
+                else if (lineNumber % 6 == 3) {
+                    importBytes = new int[line[lineNumber]];
+                    for (int i = 0; i <= line[lineNumber]; i++) {
                         importBytes[i] = importItemBytes;
                         importItemCode = String.valueOf((char) importBytes[i]);
                     }
 
                 }//code import
 
-                else if (k % 6 == 4) {
-                    importBytes = new int[line[k]];
-                    for (int i = 0; i <= line[k]; i++) {
+                else if (lineNumber % 6 == 4) {
+                    importBytes = new int[line[lineNumber]];
+                    for (int i = 0; i <= line[lineNumber]; i++) {
                         importBytes[i] = importItemBytes;
-                        importItemNum = Integer.parseInt(String.valueOf((char) importBytes[i]));;
+                        importItemNum = Integer.parseInt(String.valueOf((char) importBytes[i]));
                     }
 
                 }//quantity import
 
-                else if (k % 6 == 5) {
-                    importBytes = new int[line[k]];
-                    for (int i = 0; i <= line[k]; i++) {
+                else if (lineNumber % 6 == 5) {
+                    importBytes = new int[line[lineNumber]];
+                    for (int i = 0; i <= line[lineNumber]; i++) {
                         importBytes[i] = importItemBytes;
-                        importItemPrice = Double.parseDouble(String.valueOf((char) importBytes[i]));;
+                        importItemPrice = Double.parseDouble(String.valueOf((char) importBytes[i]));
                     }
 
                 }//Price import
@@ -152,13 +149,16 @@ public class ListFile {
             }
         }catch (IOException e){
             throw new RuntimeException(e);
-        }
+        }//Phrase 3: import to the storage arraylist in the programme
 
+        ioModule.currentItem = colonNumber / 5;
+        System.out.println(ioModule.currentItem + "group(s) of data has been imported. ");
+        System.out.println("Preview: ");
+        System.out.println(ioModule.getItemList());
 
-            System.out.println(colonNumber / 5 + "group(s) of data has been imported. ");
-            System.out.println("Preview: ");
-            System.out.println(ioModule.getItemList());
+    }//read module end
 
+    public void itemImport() throws IOException {
+        readTxtList(setImportDestination());
     }
-
 }
