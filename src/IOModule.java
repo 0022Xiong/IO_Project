@@ -7,10 +7,6 @@ public class IOModule {
 
     public ArrayList<Storage> storage = new ArrayList<Storage>();
 
-//    public boolean add(Storage item){
-//        return storage.add(item);
-//    }
-
     public String listRecord = "Error";
     private int currentItem = 0;
 
