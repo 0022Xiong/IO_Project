@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Driver {
 
@@ -12,15 +13,19 @@ public class Driver {
         System.out.println("IO SYSTEM FOR SHOPS");
         System.out.println("////////////////////////////////////////");
         System.out.println("Loading...");
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        }catch (Exception e){}
         Driver driver = new Driver();
-
         driver.setup();
     }
 
     public void setup() {
+        ioModule = new IOModule();
+        ioModule.clearScreen();
         displayMenu();
         try {
-            actionMenu(displayMenu());
+            actionMenu();
         }catch (IOException e){
             throw new RuntimeException(e);
         }
@@ -99,35 +104,26 @@ public class Driver {
 
     }
 
-    private void dummyData() {
-        Storage sample1 = new Storage(
-                "1",
-                "1",
-                1,
-                1.0
-        );
-    }
-
     private int displayMenu() {
         ioModule = new IOModule();
         ioModule.clearScreen();
-        System.out.println("////////////////////////////////////////");
         System.out.print("""
                 MENU
+                ---
                 1) Add new item(s)
-                2) Edit the current list
+                2) Import from a current list
                 3) Exit
+                ==>
                 """);
-        System.out.println("////////////////////////////////////////");
+//        input.nextInt();//fix the bug
         return input.nextInt();
     }
-    private void actionMenu(int option) throws IOException {
+    private void actionMenu() throws IOException {
         ioModule = new IOModule();
-        listFile = new ListFile();
-        option = displayMenu();
+        int option = displayMenu();
         switch(option){
             case 1-> ioModule.itemAddTypeIn();
-            case 2-> listFile.itemImport();
+            case 2-> ioModule.itemImport();
             case 3-> exit();
             default->System.out.println("Invalid option entered: " + option);
         }
@@ -139,4 +135,14 @@ public class Driver {
         System.out.println("Exiting...");
         System.exit(0);
     }
+
+    private void dummyData() {
+        Storage sample1 = new Storage(
+                "1",
+                "1",
+                1,
+                1.0
+        );
+    }
+
 }

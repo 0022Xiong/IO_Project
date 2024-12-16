@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class ListFile {
 
     public IOModule ioModule;
-    public Storage storage;
 
     Scanner input = new Scanner(System.in);
 
@@ -48,7 +47,7 @@ public class ListFile {
 
     }
 
-    public void readTxtList(String destinationFileImport) throws IOException{
+    public void readTxtList(String destinationFileImport) {
 
         String importItemName = "";
         String importItemCode = "";
@@ -73,7 +72,7 @@ public class ListFile {
         }//Phrase 1: read the valid line
 
         try (FileInputStream readFile2 = new FileInputStream(destinationFileImport)){
-            int lineNumber = -1;
+            int lineNumber = 0;
             int charDetect = -1;
             while(readFile2.read() != -1) {
                 if (readFile2.read() == 58) {
@@ -89,7 +88,7 @@ public class ListFile {
                 }//before enter
                 else {
                     line[lineNumber] = charDetect;
-                    charDetect = 0;
+                    charDetect = -1;
                 }//enter
 
             }
@@ -159,53 +158,39 @@ public class ListFile {
 
     }//read module end
 
-    public void itemImport() throws IOException {
-        readTxtList(setImportDestination());
-        importMenu();
-    }
+//    public void itemImport() throws IOException {
+//        readTxtList(setImportDestination());
+//        importMenu();
+//    }
 
-    public int importMenu(){
-        ioModule.clearScreen();
-        System.out.println("////////////////////////////////////////");
-        System.out.print("""
-                MENU
-                1) search
-                2) Edit 
-                3) Delete
-                """);
-        System.out.println("////////////////////////////////////////");
-        return input.nextInt();
-    }
+//    public int importMenu(){
+//        ioModule.clearScreen();
+//        System.out.println("////////////////////////////////////////");
+//        System.out.print("""
+//                MENU
+//                1) search
+//                2) Edit
+//                3) Delete
+//                """);
+//        System.out.println("////////////////////////////////////////");
+//        return input.nextInt();
+//    }
 
-    public void actionimportMenu(int option){
-        option=importMenu();
-        IOModule ioModule = new IOModule();
-        while(option !=0){
-
-            switch(option){
-                case 1->itemSearch();
-               // case 2-
-                case 3 -> ioModule.itemDelete();
-
-
-            }
-
-        }
-
-    }
-
-    public void itemSearch(){
-        ioModule.clearScreen();
-        System.out.println("Now in the SEARCH mode");
-        System.out.print("""
-                    Please select the mode:
-                    1) By name
-                    2) By code
-                    3) By quantity
-                    4) By price
-                    """);
-        int subMode = input.nextInt();
-        ioModule.itemSearch(subMode);
-
-    }
+//    public void actionImportMenu(int option){
+//        option=importMenu();
+//        IOModule ioModule = new IOModule();
+//        while(option !=0){
+//
+//            switch(option){
+////                case 1->itemSearch();
+//               // case 2-
+//                case 3 -> ioModule.itemDelete();
+//
+//
+//            }
+//
+//        }
+//
+//    }
+//
 }

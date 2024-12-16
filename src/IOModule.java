@@ -1,15 +1,17 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class IOModule {
     Scanner input = new Scanner(System.in);
-
+    public ListFile listFile;
     public ArrayList<Storage> storage = new ArrayList<Storage>();
 
     public String listRecord = "Error";
     public int currentItem = 0;
 
     public void itemAddTypeIn() {
+        System.out.println("Now in the ADD mode");
         System.out.println("Warning: avoid colons(:) ");
         System.out.println("Please enter the name of the item: ");
         String itemName = input.nextLine();
@@ -34,17 +36,81 @@ public class IOModule {
 
         System.out.println("Preview: ");
         System.out.print(getItemListCurrent());
-        System.out.println("Add more?(Y/n)");
-        char sub2Mode = input.next().charAt(0);
-        if (sub2Mode == 'y' || sub2Mode == 'Y') {
-            clearScreen();
+        System.out.println("""
+                Add more?
+                ---
+                1) Yes
+                2) No
+                ==>
+                """);
+        int option1 = input.nextInt();
+        clearScreen();
+        if (option1 == 1) {
             input.nextLine();//fix the bug
             itemAddTypeIn();
+        }
+        else {
+            System.out.println("""
+                    Do you want to output the list you are creating? (Y/n)
+                    ---
+                    1) Yes
+                    2) No
+                    ==>
+                    """);
+            int option2 = input.nextInt();
+            if (option2 == 1){
+                listRecord = getItemList();
+                try {
+                    listFile = new ListFile();
+                    listFile.itemOutput(listRecord);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+
         }
 
     }//input type-in end
 
-    public Storage itemSearch(int subMode) {
+    public void itemImport() throws IOException {
+        listFile = new ListFile();
+        System.out.println("Loading......");
+        String importDestination = listFile.setImportDestination();
+        listFile.readTxtList(importDestination);
+        clearScreen();
+        System.out.print("""
+                MENU
+                ---
+                1) Search
+                2) Edit
+                3) Delete
+                ==>
+                """);
+        int option = input.nextInt();
+        if (option == 1){
+            itemSearch();
+        }
+        else if (option == 2) {
+            itemEdit();
+        }
+        else if (option == 3) {
+            itemDelete();
+        }
+
+    }
+
+    public Storage itemSearch() {
+        clearScreen();
+        System.out.println("Now in the SEARCH mode");
+        System.out.print("""
+                    Please select the mode:
+                    1) By name
+                    2) By code
+                    3) By quantity
+                    4) By price
+                    """);
+        int option = input.nextInt();
         String search = input.nextLine();
         Storage searchItem = null;
         if (storage.isEmpty()) {
@@ -54,11 +120,14 @@ public class IOModule {
             System.out.println("You probably want to find: ");
             boolean result = false;
             for (int i = 0; i < currentItem; i++){
-                switch (subMode){
-                    case 1 -> result = storage.get(i).getItemName().contains(search);
-                    case 2 -> result = storage.get(i).getItemCode().contains(search);
-                    case 3 -> result = String.valueOf(storage.get(i).getItemNum()).contains(search);
-                    case 4 -> result = String.valueOf(storage.get(i).getItemPrice()).contains(search);
+                if (option == 1) {
+                    result = storage.get(i).getItemName().contains(search);
+                } else if (option == 2) {
+                    result = storage.get(i).getItemCode().contains(search);
+                } else if (option == 3) {
+                    result = String.valueOf(storage.get(i).getItemNum()).contains(search);
+                } else if (option == 4) {
+                    result = String.valueOf(storage.get(i).getItemPrice()).contains(search);
                 }
                 if (result) {
                     searchItem = storage.get(i);
@@ -68,6 +137,7 @@ public class IOModule {
         }
         return searchItem;
     }
+
 //        if (!storage.isEmpty()) {
 //            for (Storage s : storage)
 //                if (s.getItemCode().equals(codeSearch))
@@ -79,6 +149,10 @@ public class IOModule {
 //            System.out.println("There is nothing in the list. ");
 //            return null;
 //        }
+    public void itemEdit() {
+
+    }
+
 
     public void itemDelete() {
         System.out.println("Tips: It is suggested that you should make a backup before you delete the data from the list. ");
@@ -88,9 +162,15 @@ public class IOModule {
         System.out.println("Finish!");
         System.out.println("Preview: ");
         System.out.println(getItemList());
-        System.out.println("Delete more?(Y/n)");
-        char subMode = input.next().charAt(0);
-        if (subMode == 'y' || subMode == 'Y') {
+        System.out.println("""
+                Delete more?
+                ---
+                1) Yes
+                2) No
+                ==>
+                """);
+        int option = input.nextInt();
+        if (option == 1) {
             clearScreen();
             itemDelete();
         }
