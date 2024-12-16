@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class ListFile {
 
     public IOModule ioModule;
+    public Storage storage;
 
     Scanner input = new Scanner(System.in);
 
@@ -160,5 +161,51 @@ public class ListFile {
 
     public void itemImport() throws IOException {
         readTxtList(setImportDestination());
+        importMenu();
+    }
+
+    public int importMenu(){
+        ioModule.clearScreen();
+        System.out.println("////////////////////////////////////////");
+        System.out.print("""
+                MENU
+                1) search
+                2) Edit 
+                3) Delete
+                """);
+        System.out.println("////////////////////////////////////////");
+        return input.nextInt();
+    }
+
+    public void actionimportMenu(int option){
+        option=importMenu();
+        IOModule ioModule = new IOModule();
+        while(option !=0){
+
+            switch(option){
+                case 1->itemSearch();
+               // case 2-
+                case 3 -> ioModule.itemDelete();
+
+
+            }
+
+        }
+
+    }
+
+    public void itemSearch(){
+        ioModule.clearScreen();
+        System.out.println("Now in the SEARCH mode");
+        System.out.print("""
+                    Please select the mode:
+                    1) By name
+                    2) By code
+                    3) By quantity
+                    4) By price
+                    """);
+        int subMode = input.nextInt();
+        ioModule.itemSearch(subMode);
+
     }
 }
