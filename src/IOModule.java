@@ -12,7 +12,7 @@ public class IOModule {
 
     public void itemAddTypeIn() {
         System.out.println("Now in the ADD mode");
-        System.out.println("Warning: avoid colons(:) ");
+        System.out.println("Warning: avoid colons(:) and space ");
         System.out.println("Please enter the name of the item: ");
         String itemName = input.nextLine();
         System.out.println("Please enter the code of the item: ");
@@ -41,8 +41,7 @@ public class IOModule {
                 ---
                 1) Yes
                 2) No
-                ==>
-                """);
+                ==>""");
         int option1 = input.nextInt();
         clearScreen();
         if (option1 == 1) {
@@ -51,12 +50,11 @@ public class IOModule {
         }
         else {
             System.out.println("""
-                    Do you want to output the list you are creating? (Y/n)
+                    Do you want to output the list you are creating?
                     ---
                     1) Yes
                     2) No
-                    ==>
-                    """);
+                    ==>""");
             int option2 = input.nextInt();
             if (option2 == 1){
                 listRecord = getItemList();
@@ -85,8 +83,7 @@ public class IOModule {
                 1) Search
                 2) Edit
                 3) Delete
-                ==>
-                """);
+                ==>""");
         int option = input.nextInt();
         if (option == 1){
             itemSearch();
@@ -109,7 +106,7 @@ public class IOModule {
                     2) By code
                     3) By quantity
                     4) By price
-                    """);
+                    ==>""");
         int option = input.nextInt();
         String search = input.nextLine();
         Storage searchItem = null;
@@ -167,8 +164,7 @@ public class IOModule {
                 ---
                 1) Yes
                 2) No
-                ==>
-                """);
+                ==>""");
         int option = input.nextInt();
         if (option == 1) {
             clearScreen();
@@ -186,7 +182,7 @@ public class IOModule {
     public String getItemList() {
         String listOfItem = "";
         for (int i = 1; i < currentItem + 1; i++) {
-            listOfItem += "No." + i + "\n" + storage.get(i - 1) + "\n";
+            listOfItem += ">No." + i + "\n" + storage.get(i - 1);
         }
         return listOfItem;
     }
