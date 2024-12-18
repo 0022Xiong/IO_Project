@@ -251,7 +251,7 @@ public class IOModule {
     public String getItemList() {
         String listOfItem = "";
         for (int i = 1; i < currentItem + 1; i++) {
-            listOfItem += ">No." + i + "\n" + storage.get(i - 1);
+            listOfItem += "\n" + ">No." + i + "\n" + storage.get(i - 1);
         }
         return listOfItem;
     }
