@@ -12,7 +12,7 @@ public class ListFile {
         System.out.println("Preview: ");
         ioModule = new IOModule();
         System.out.print("\n" + listRecord);
-        System.out.println("Tips: Don't forget to type in the name of the file. \n      Also don't forget the .txt!");
+        System.out.println("\u001b[31mTips: Don't forget to type in the name of the file. \n      Also don't forget the .txt!\u001b[0m");
         System.out.println("If the file does not exist, then create one. ");
         System.out.println("Please enter the output location: ");
         String destinationFileOutput = input.nextLine();
@@ -209,11 +209,12 @@ public class ListFile {
         System.out.println(ioModule.listRecord);
 
     }//read module end
+
     public void itemChangesOutput(String listRecord) {
         System.out.println("Preview: ");
         ioModule = new IOModule();
         System.out.print("\n" + listRecord);
-        System.out.println("Tips: Don't forget to type in the name of the file. \n      Also don't forget the .txt!");
+        System.out.println("\u001b[31mTips: Don't forget to type in the name of the file. \n      Also don't forget the .txt!\u001b[0m");
         System.out.println("If the file does not exist, then create one. ");
         System.out.println("Please enter the output location: ");
         String destinationFileOutput = input.nextLine();
@@ -224,7 +225,8 @@ public class ListFile {
             System.out.println("List has been output. ");
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }//For delete and edit
 
     }
+
 }

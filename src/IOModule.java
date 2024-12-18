@@ -12,7 +12,7 @@ public class IOModule {
 
     public void itemAddTypeIn() {
         System.out.println("Now in the ADD mode");
-        System.out.println("Warning: avoid colons(:) and space ");
+        System.out.println("\u001b[31mWarning: avoid colons(:) and space \u001b[0m");
         System.out.println("Please enter the name of the item: ");
         String itemName = input.nextLine();
         System.out.println("Please enter the code of the item: ");
@@ -161,7 +161,7 @@ public class IOModule {
 
     public void itemEdit() throws IOException {
         clearScreen();
-        System.out.println("Tips: Remember to save the changes! ");
+        System.out.println("\u001b[31mTips: Remember to save the changes! \u001b[0m");
         System.out.println("Please enter the number of the data you want to edit: ");
         int num = input.nextInt();
         System.out.println("Current data: ");
@@ -205,7 +205,7 @@ public class IOModule {
 
     public void itemDelete() throws IOException {
         clearScreen();
-        System.out.println("Tips: Remember to save the changes! ");
+        System.out.println("\u001b[31mTips: Remember to save the changes! \u001b[0m");
         System.out.println("Please enter the number of the data you want to delete: ");
         int num = input.nextInt();
         listFile.ioModule.storage.set(num - 1, null);
