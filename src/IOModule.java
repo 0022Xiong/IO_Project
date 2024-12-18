@@ -76,6 +76,8 @@ public class IOModule {
         System.out.println("Loading......");
         String importDestination = listFile.setImportDestination();
         listFile.readTxtList(importDestination);
+        System.out.println("Press Enter to continue...");
+        input.nextLine();
         importMenu();
     }
 
@@ -122,6 +124,7 @@ public class IOModule {
         else {
             System.out.println("You probably want to find: ");
             boolean result = false;
+            int trigger = 0;
             for (int i = 0; i < listFile.ioModule.currentItem; i++){
                 if (option == 1) {
                     result = listFile.ioModule.storage.get(i).getItemName().contains(search);
@@ -133,14 +136,15 @@ public class IOModule {
                     result = String.valueOf(listFile.ioModule.storage.get(i).getItemPrice()).contains(search);
                 }
                 if (result) {
+                    trigger++;
                     searchItem = listFile.ioModule.storage.get(i);
                     System.out.println(">No." + (i + 1) + "\n" + searchItem);
                 }
-                else{
+                else if(trigger == 0){
                     System.out.println("Sorry, no result.");
                 }
             }
-            System.out.println("Press any key to continue");
+            System.out.println("Press Enter to continue");
             input.nextLine();
             System.out.println("""
                     After searching, you are going to:
@@ -166,7 +170,7 @@ public class IOModule {
         int num = input.nextInt();
         System.out.println("Current data: ");
         System.out.println(listFile.ioModule.getItemListOrdered(num));
-        System.out.println("Warning: avoid colons(:) and space ");
+        System.out.println("\u001b[31mWarning: avoid colons(:) and space \u001b[0m");
         System.out.println("Please enter the name of the item: ");
         input.nextLine();//fix the bug
         String itemName = input.nextLine();

@@ -211,6 +211,7 @@ public class ListFile {
     }//read module end
 
     public void itemChangesOutput(String listRecord) {
+        ioModule.clearScreen();
         System.out.println("Preview: ");
         ioModule = new IOModule();
         System.out.print("\n" + listRecord);

@@ -8,9 +8,7 @@ public class Driver {
     private Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-        try {
-            TimeUnit.SECONDS.sleep(3);
-        }catch (Exception e){}
+
         Driver driver = new Driver();
         driver.setup();
         driver.displayMenu();
@@ -23,6 +21,9 @@ public class Driver {
         System.out.println("IO SYSTEM FOR SHOPS");
         System.out.println("////////////////////////////////////////");
         System.out.println("Loading...");
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        }catch (Exception e){}
         ioModule = new IOModule();
         ioModule.clearScreen();
 
@@ -48,7 +49,8 @@ public class Driver {
                 case 2 -> ioModule.itemImport();
                 default -> System.out.println("Invalid option entered: " + option);
             }
-            System.out.println("Press any key to continue...");
+            System.out.println("Press Enter to continue...");
+            input.nextLine();
             input.nextLine();
             displayMenu();
             option = input.nextInt();
