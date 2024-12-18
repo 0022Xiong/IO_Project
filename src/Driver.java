@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 public class Driver {
 
     public IOModule ioModule;
-    public ListFile listFile;
     private Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
@@ -120,6 +119,8 @@ public class Driver {
                 case 2 -> ioModule.itemImport();
                 default -> System.out.println("Invalid option entered: " + option);
             }
+            System.out.println("Press any key to continue...");
+            input.nextLine();
             displayMenu();
             option = input.nextInt();
         }
@@ -131,13 +132,13 @@ public class Driver {
         System.exit(0);
     }
 
-    private void dummyData() {
-        Storage sample1 = new Storage(
-                "1",
-                "1",
-                1,
-                1.0
-        );
-    }
+//    private void dummyData() {
+//        Storage sample1 = new Storage(
+//                "1",
+//                "1",
+//                1,
+//                1.0
+//        );
+//    }
 
 }
