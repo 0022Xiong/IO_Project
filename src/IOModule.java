@@ -168,6 +168,7 @@ public class IOModule {
         System.out.println(listFile.ioModule.getItemListOrdered(num));
         System.out.println("Warning: avoid colons(:) and space ");
         System.out.println("Please enter the name of the item: ");
+        input.nextLine();//fix the bug
         String itemName = input.nextLine();
         System.out.println("Please enter the code of the item: ");
         String itemCode = input.nextLine();
@@ -194,13 +195,13 @@ public class IOModule {
             itemEdit();
         }
         else if (option == 2) {
+            listFile.ioModule.listRecord = listFile.ioModule.getItemList();
             listFile.itemChangesOutput(listFile.ioModule.listRecord);
         }
         else if (option == 3) {
             importMenu();
         }
     }
-
 
     public void itemDelete() throws IOException {
         clearScreen();

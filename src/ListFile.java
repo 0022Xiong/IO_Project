@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class ListFile {
 
-    public IOModule ioModule;
+    public IOModule ioModule = new IOModule();
 
     Scanner input = new Scanner(System.in);
 
@@ -98,7 +98,6 @@ public class ListFile {
         }//Phrase 2: set the quantity of char
 
         try (FileInputStream readFile3 = new FileInputStream(destinationFileImport)){
-//            int index = 0;
             int index = -1;
             int lineNumber = 0;
             int charDetect = 0;
@@ -106,17 +105,8 @@ public class ListFile {
             String transInt = "";
             String transDouble = "";
             int j = 0;
-//            importBytes = new int[line[index]];
-            importBytes = new int[5];
+            importBytes = new int[16];
             while (((importItemBytes = readFile3.read()) != -1)) {
-//                if (importItemBytes == 58 && lineNumber != 0) {
-//                    index++;
-//                    lineNumber++;
-//                    importBytes = new int[line[index]];
-//                }
-//                else if (importItemBytes == 58 && index == 0 && lineNumber == 0) {
-//                    lineNumber++;
-//                }
                 if (importItemBytes == 58) {
                     index++;
                     lineNumber++;
@@ -195,27 +185,31 @@ public class ListFile {
                 if (lineNumber / 4 == 1 && importItemBytes == 10) {
                     importItemNum = Integer.parseInt(transInt);
                     importItemPrice = Double.parseDouble(transDouble);
-                    ioModule = new IOModule();
-                    ioModule.storage.add(new Storage(
+                    ioModule.storage.addLast(new Storage(
                             importItemName,
                             importItemCode,
                             importItemNum,
                             importItemPrice));
+                    importItemName = "";
+                    importItemCode = "";
                     lineNumber = 0;
+                    transInt = "";
+                    transDouble = "";
+
                 }
             }
         }catch (IOException e){
             throw new RuntimeException(e);
         }//Phrase 3: import to the storage arraylist in the programme
+
         ioModule.currentItem = colonNumber / 4;
         System.out.println(ioModule.currentItem + " group(s) of data has been imported. ");
         ioModule.listRecord = ioModule.getItemList();
         System.out.println("Preview: ");
         System.out.println(ioModule.listRecord);
-//        System.out.println(ioModule.getItemList());
 
     }//read module end
-    public void itemChangesOutput(String listRecord) throws IOException {
+    public void itemChangesOutput(String listRecord) {
         System.out.println("Preview: ");
         ioModule = new IOModule();
         System.out.print("\n" + listRecord);
