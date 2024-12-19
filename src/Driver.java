@@ -29,7 +29,7 @@ public class Driver {
 
     }
 
-    private void displayMenu() {
+    public void displayMenu() {
         ioModule = new IOModule();
         ioModule.clearScreen();
         System.out.print("""
@@ -41,7 +41,7 @@ public class Driver {
                 ==>""");
     }
 
-    private void actionMenu() throws IOException{
+    public void actionMenu() throws IOException{
         int option = input.nextInt();
         while (option != 0) {
             switch (option) {

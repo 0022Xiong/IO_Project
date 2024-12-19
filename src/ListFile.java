@@ -14,7 +14,7 @@ public class ListFile {
         System.out.print("\n" + listRecord);
         System.out.println("\u001b[31mTips: Don't forget to type in the name of the file. \n      Also don't forget the .txt!\u001b[0m");
         System.out.println("If the file does not exist, then create one. ");
-        System.out.println("Please enter the output location: ");
+        System.out.println("Please enter the output path: ");
         String destinationFileOutput = input.nextLine();
         try (FileOutputStream output = new FileOutputStream(destinationFileOutput, true)) {
             this.ioModule = new IOModule();
@@ -29,7 +29,7 @@ public class ListFile {
 
     //Import needs test
     public String setImportDestination() throws IOException{
-        System.out.println("Please enter the read location: ");
+        System.out.println("Please enter the read path: ");
         String destinationFileImport = input.nextLine();
         try {
             File read = new File(destinationFileImport);
@@ -104,7 +104,7 @@ public class ListFile {
             int importItemBytes;
             String transInt = "";
             String transDouble = "";
-            int j = 0;
+            int indexBytes = 0;
             importBytes = new int[16];
             while (((importItemBytes = readFile3.read()) != -1)) {
                 if (importItemBytes == 58) {
@@ -119,14 +119,14 @@ public class ListFile {
                             charDetect++;
                         }//before space
                         else if (importItemBytes != 32 && charDetect > 0) {
-                            importBytes[j] = importItemBytes;
-                            importItemName += String.valueOf((char) importBytes[j]);
-                            j++;
+                            importBytes[indexBytes] = importItemBytes;
+                            importItemName += String.valueOf((char) importBytes[indexBytes]);
+                            indexBytes++;
                         }//after space
                     }
                     else if (importItemBytes == 10){
                         charDetect = 0;
-                        j = 0;
+                        indexBytes = 0;
                     }
                 }//name import
 
@@ -136,14 +136,14 @@ public class ListFile {
                             charDetect++;
                         }//before space
                         else if (importItemBytes != 32 && charDetect > 0) {
-                            importBytes[j] = importItemBytes;
-                            importItemCode += String.valueOf((char) importBytes[j]);
-                            j++;
+                            importBytes[indexBytes] = importItemBytes;
+                            importItemCode += String.valueOf((char) importBytes[indexBytes]);
+                            indexBytes++;
                         }//after space
                     }
                     else if (importItemBytes == 10){
                         charDetect = 0;
-                        j = 0;
+                        indexBytes = 0;
                     }
                 }//code import
 
@@ -153,15 +153,15 @@ public class ListFile {
                             charDetect++;
                         }//before space
                         else if (importItemBytes != 32 && charDetect > 0) {
-                            importBytes[j] = importItemBytes;
-                            transInt += String.valueOf((char) importBytes[j]);
+                            importBytes[indexBytes] = importItemBytes;
+                            transInt += String.valueOf((char) importBytes[indexBytes]);
 
-                            j++;
+                            indexBytes++;
                         }//after space
                     }
                     else if (importItemBytes == 10){
                         charDetect = 0;
-                        j = 0;
+                        indexBytes = 0;
                     }
                 }//quantity import
 
@@ -171,14 +171,14 @@ public class ListFile {
                             charDetect++;
                         }//before space
                         else if (importItemBytes != 32 && charDetect > 0) {
-                            importBytes[j] = importItemBytes;
-                            transDouble += String.valueOf((char) importBytes[j]);
-                            j++;
+                            importBytes[indexBytes] = importItemBytes;
+                            transDouble += String.valueOf((char) importBytes[indexBytes]);
+                            indexBytes++;
                         }//after space
                     }
                     else if (importItemBytes == 10){
                         charDetect = 0;
-                        j = 0;
+                        indexBytes = 0;
                     }
                 }//Price import
 
@@ -217,7 +217,7 @@ public class ListFile {
         System.out.print("\n" + listRecord);
         System.out.println("\u001b[31mTips: Don't forget to type in the name of the file. \n      Also don't forget the .txt!\u001b[0m");
         System.out.println("If the file does not exist, then create one. ");
-        System.out.println("Please enter the output location: ");
+        System.out.println("Please enter the output path: ");
         String destinationFileOutput = input.nextLine();
         try (FileOutputStream output = new FileOutputStream(destinationFileOutput)) {
             this.ioModule = new IOModule();
@@ -227,6 +227,7 @@ public class ListFile {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }//For delete and edit
+        ioModule = new IOModule();
 
     }
 

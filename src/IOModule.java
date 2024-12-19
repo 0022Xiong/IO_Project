@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class IOModule {
     Scanner input = new Scanner(System.in);
     public ListFile listFile;
+    public Driver driver = new Driver();
     public ArrayList<Storage> storage = new ArrayList<>();
 
     public String listRecord = "Error";
@@ -89,6 +90,8 @@ public class IOModule {
                 1) Search
                 2) Edit
                 3) Delete
+                4) Save changes
+                0) Exit import menu
                 ==>""");
         int option = input.nextInt();
         if (option == 1){
@@ -99,6 +102,13 @@ public class IOModule {
         }
         else if (option == 3) {
             itemDelete();
+        }
+        else if (option == 4) {
+            listFile.itemChangesOutput(listFile.ioModule.listRecord);
+        }
+        else {
+            driver.displayMenu();
+            driver.actionMenu();
         }
 
     }
@@ -140,9 +150,9 @@ public class IOModule {
                     searchItem = listFile.ioModule.storage.get(i);
                     System.out.println(">No." + (i + 1) + "\n" + searchItem);
                 }
-                else if(trigger == 0){
-                    System.out.println("Sorry, no result.");
-                }
+            }
+            if(trigger == 0){
+                System.out.println("Sorry, no result.");
             }
             System.out.println("Press Enter to continue");
             input.nextLine();
@@ -187,22 +197,18 @@ public class IOModule {
                         itemPrice
                 )
         );
+        listFile.ioModule.listRecord = listFile.ioModule.getItemList();
         System.out.println("Finish!");
         System.out.println("""
                 After editing, you are going to:
                 1) Edit more items
-                2) Save the changes
-                3) Back to the IMPORT MENU
+                2) Back to the IMPORT MENU
                 ==>""");
         int option = input.nextInt();
         if (option == 1) {
             itemEdit();
         }
-        else if (option == 2) {
-            listFile.ioModule.listRecord = listFile.ioModule.getItemList();
-            listFile.itemChangesOutput(listFile.ioModule.listRecord);
-        }
-        else if (option == 3) {
+        else {
             importMenu();
         }
     }
@@ -220,17 +226,13 @@ public class IOModule {
         System.out.println("""
                 After deleting, you are going to:
                 1) Delete more items
-                2) Save the changes
-                3) Back to the IMPORT MENU
+                2) Back to the IMPORT MENU
                 ==>""");
         int option = input.nextInt();
         if (option == 1) {
             itemDelete();
         }
-        else if (option == 2) {
-            listFile.itemChangesOutput(listFile.ioModule.listRecord);
-        }
-        else if (option == 3){
+        else {
             importMenu();
         }
 
